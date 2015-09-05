@@ -35,9 +35,7 @@ class Initialise(object):
         self.__format = "json"
         self.parser = response.build
 
-    def get_match_history(self, account_id=None, hero_id=None,  game_mode=None, skill=None,
-                         date_min=None, date_max=None, min_players=None,  league_id=None,
-                         start_at_match_id=None, matches_requested=None, tournament_games_only=None, **kwargs):
+    def get_match_history(self, account_id=None, **kwargs):
         """Returns a dictionary containing a list of the most recent Dota matches
 
         :param account_id: (int, optional)

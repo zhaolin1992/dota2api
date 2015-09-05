@@ -1,6 +1,6 @@
 from .exceptions import APIError
-from ..obj.detail import DetailMatch
-from ..obj.live_league import LiveLeagueListing, LiveGames, TournamentPrizePool, Teams
+from ..obj.match import DetailedMatch
+from ..obj.live_game import LiveLeagueListing, LiveGames, TournamentPrizePool, Teams
 from ..obj.history import HistoryMatches
 from ..obj.player import Players
 from ..obj.hero import Heroes
@@ -9,7 +9,7 @@ from ..obj.item import Items
 
 def parse_result(result):
     if 'match_id' in result and 'radiant_win' in result:
-        return DetailMatch(**result)
+        return DetailedMatch(**result)
 
     if 'matches' in result:
         return HistoryMatches(**result)
