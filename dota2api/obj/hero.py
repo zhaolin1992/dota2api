@@ -1,9 +1,20 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import json
 
 from ..src import urls
 from ..src.utils import load_json_file
-import json
+
+
+with open(load_json_file("abilities.json")) as abilities_json:
+    abilities = json.load(abilities_json)
+
+with open(load_json_file("regions.json")) as regions_json:
+    regions = json.load(regions_json)
+
+with open(load_json_file("lobbies.json")) as lobbies_json:
+    lobbies = json.load(lobbies_json)
+
+with open(load_json_file("modes.json")) as modes_json:
+    modes = json.load(modes_json)
 
 with open(load_json_file("heroes.json")) as heroes_json:
     heroes = json.load(heroes_json)
@@ -21,9 +32,19 @@ def hero_map(hero_id):
         return None
 
 
+def ability_name(ability_id):
+    ability = [ability['name'] for ability in abilities['abilities'] if ability['id'] == str(ability_id)]
+    if ability:
+        return ability[0]
+    else:
+        return "UNKNOWN"
+
+
 class Heroes(list):
     def __init__(self, **kwargs):
+        super(Heroes, self).__init__()
         list(map(self.append, [Hero(hero_kwargs['id']) for hero_kwargs in kwargs['heroes']]))
+
 
 class Hero(object):
     def __init__(self, hero_id):
@@ -49,9 +70,3 @@ class Hero(object):
 
     def __repr__(self):
         return 'Item id: {} name: {}'.format(self.id, self.localized_name)
-
-
-
-
-
-

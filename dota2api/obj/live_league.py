@@ -1,13 +1,26 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import json
 
-from basics import BasePlayer
-from hero import Hero
+from .hero import Hero
+from .player import BasePlayer
+from ..src.utils import load_json_file
 
 
-class LiveLeagueGamePlayer(BasePlayer):
+with open(load_json_file("abilities.json")) as abilities_json:
+    abilities = json.load(abilities_json)
+
+with open(load_json_file("regions.json")) as regions_json:
+    regions = json.load(regions_json)
+
+with open(load_json_file("lobbies.json")) as lobbies_json:
+    lobbies = json.load(lobbies_json)
+
+with open(load_json_file("modes.json")) as modes_json:
+    modes = json.load(modes_json)
+
+
+class LiveGamePlayer(BasePlayer):
     def __init__(self, **kwargs):
-        super(LiveLeagueGamePlayer, self).__init__(**kwargs)
+        super(LiveGamePlayer, self).__init__(**kwargs)
         self.ultimate_state = kwargs.get('ultimate_state')
         self.ultimate_cooldown = kwargs.get('ultimate_cooldown')
         self.respawn_timer = kwargs.get('respawn_timer')
@@ -18,12 +31,13 @@ class LiveLeagueGamePlayer(BasePlayer):
         # self.abilities = [AbilityLevel(**ability_kwargs) for ability_kwargs in kwargs.get('abilities', [])]
 
 
-class LeagueListing(list):
+class LiveLeagueListing(list):
     def __init__(self, **kwargs):
-        map(self.append, [League(**league_kwargs) for league_kwargs in kwargs['leagues']])
+        super(LiveLeagueListing, self).__init__()
+        list(map(self.append, [LiveLeague(**league_kwargs) for league_kwargs in kwargs['leagues']]))
 
 
-class League(object):
+class LiveLeague(object):
     def __init__(self, **kwargs):
         self.league_id = kwargs.get('leagueid')
         self.name = kwargs.get('name')
@@ -35,19 +49,20 @@ class League(object):
         return 'League id: {} name: {}'.format(self.league_id, self.name)
 
 
-class LiveLeagueGames(list):
+class LiveGames(list):
     def __init__(self, **kwargs):
-        map(self.append, [LiveLeagueGame(**live_game_kwargs) for live_game_kwargs in kwargs['games']])
+        super(LiveGames, self).__init__()
+        list(map(self.append, [LiveGame(**live_game_kwargs) for live_game_kwargs in kwargs['games']]))
 
 
-class LiveLeagueGame(object):
+class LiveGame(object):
     def __init__(self, **kwargs):
         if 'radiant_team' in kwargs:
-            self.radiant_team = LiveLeagueGameTeam(**kwargs.get('radiant_team'))
+            self.radiant_team = LiveGameTeam(**kwargs.get('radiant_team'))
         else:
             self.radiant_team = None
         if 'dire_team' in kwargs:
-            self.dire_team = LiveLeagueGameTeam(**kwargs.get('dire_team'))
+            self.dire_team = LiveGameTeam(**kwargs.get('dire_team'))
         else:
             self.dire_team = None
 
@@ -60,7 +75,7 @@ class LiveLeagueGame(object):
         self.dire_series_wins = kwargs.get('dire_series_wins')
         self.series_type = kwargs.get('series_type')
         self.league_tier = kwargs.get('league_tier')
-        self.scoreboard = LiveLeagueGameScoreboard(**kwargs.get('scoreboard'))
+        self.scoreboard = Scoreboard(**kwargs.get('scoreboard'))
         # should we load player list on the top of the result?
         # there are almost the same information on the scoreboard
 
@@ -68,12 +83,12 @@ class LiveLeagueGame(object):
         return 'LiveLeagueGame match_id: {} league_id: {}'.format(self.match_id, self.league_id)
 
 
-class LiveLeagueGameScoreboard(object):
+class Scoreboard(object):
     def __init__(self, **kwargs):
         self.duration = kwargs.get('duration')
         self.roshan_respawn_timer = kwargs.get('roshan_respawn_timer')
-        self.radiant = LiveLeagueGameTeamScoreboard(**kwargs.get('radiant'))
-        self.dire = LiveLeagueGameTeamScoreboard(**kwargs.get('dire'))
+        self.radiant = TeamScoreboard(**kwargs.get('radiant'))
+        self.dire = TeamScoreboard(**kwargs.get('dire'))
 
     def __repr__(self):
         return 'LiveGameScoreboard duration: {} radiant kills: {} dire kills: {}'.format(self.duration,
@@ -81,7 +96,7 @@ class LiveLeagueGameScoreboard(object):
                                                                                          self.dire.score)
 
 
-class LiveLeagueGameTeamScoreboard(object):
+class TeamScoreboard(object):
     def __init__(self, **kwargs):
         self.score = kwargs.get('score')
         self.tower_state = kwargs.get('tower_state')
@@ -94,13 +109,13 @@ class LiveLeagueGameTeamScoreboard(object):
         # are different json objects with the same names, when it gets converted
         # to python dicts, only the last result stands, and I think it would be great to
         # have this information in the Player object, instead of another list on LiveGameTeamScoreboard
-        self.players = [LiveLeagueGamePlayer(**player_args) for player_args in kwargs.get('players')]
+        self.players = [LiveGamePlayer(**player_args) for player_args in kwargs.get('players')]
 
     def __repr__(self):
         return 'Scoreboard kills: {}'.format(self.score)
 
 
-class LiveLeagueGameTeam(object):
+class LiveGameTeam(object):
     def __init__(self, **kwargs):
         self.team_name = kwargs.get('team_name')
         self.team_id = kwargs.get('team_id')
@@ -113,7 +128,8 @@ class LiveLeagueGameTeam(object):
 
 class Teams(list):
     def __init__(self, **kwargs):
-        map(self.append, [Team(**team_args) for team_args in kwargs['teams']])
+        super(Teams, self).__init__()
+        list(map(self.append, [Team(**team_args) for team_args in kwargs['teams']]))
 
 
 class Team(object):

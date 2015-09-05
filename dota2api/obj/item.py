@@ -1,19 +1,33 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import json
 
 from ..src.utils import load_json_file
 from ..src.urls import BASE_ITEMS_IMAGES_URL
-import json
+
+
+with open(load_json_file("abilities.json")) as abilities_json:
+    abilities = json.load(abilities_json)
+
+with open(load_json_file("regions.json")) as regions_json:
+    regions = json.load(regions_json)
+
+with open(load_json_file("lobbies.json")) as lobbies_json:
+    lobbies = json.load(lobbies_json)
+
+with open(load_json_file("modes.json")) as modes_json:
+    modes = json.load(modes_json)
 
 with open(load_json_file("items.json")) as items_json:
     items = json.load(items_json)
 
+
 def item_map(item_id):
     item_maps = [item for item in items['items'] if item['id'] == item_id]
+
     if item_maps:
         return item_maps[0]
     else:
         return ''
+
 
 def load_item(index, **kwargs):
     live_game_item_index = "item" + str(index)
@@ -25,6 +39,7 @@ def load_item(index, **kwargs):
 
 class Items(list):
     def __init__(self, **kwargs):
+        super(Items, self).__init__()
         list(map(self.append, [Item(item_kwargs['id']) for item_kwargs in kwargs['items']]))
 
 

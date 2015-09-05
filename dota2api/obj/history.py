@@ -1,7 +1,19 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from .hero import Hero
-from .basics import lobby_name
+from .match import *
+from ..src.utils import load_json_file
+
+
+with open(load_json_file("abilities.json")) as abilities_json:
+    abilities = json.load(abilities_json)
+
+with open(load_json_file("regions.json")) as regions_json:
+    regions = json.load(regions_json)
+
+with open(load_json_file("lobbies.json")) as lobbies_json:
+    lobbies = json.load(lobbies_json)
+
+with open(load_json_file("modes.json")) as modes_json:
+    modes = json.load(modes_json)
 
 
 class HistoryMatches(object):
@@ -33,7 +45,6 @@ class HistoryPlayer(object):
         self.account_id = kwargs.get('account_id')
         self.player_slot = kwargs['player_slot']
         self.hero = Hero(kwargs['hero_id'])
-
 
     def __repr__(self):
         return 'HistoryPlayer account_id: {}'.format(self.account_id)

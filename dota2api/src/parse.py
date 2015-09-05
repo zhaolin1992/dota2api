@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""Parse some of the values from the API, all can be found in the ``response`` returned"""
-
-
 from .exceptions import APIError
 from ..obj.detail import DetailMatch
-from ..obj.league import LeagueListing, LiveLeagueGames, TournamentPrizePool, Teams
+from ..obj.live_league import LiveLeagueListing, LiveGames, TournamentPrizePool, Teams
 from ..obj.history import HistoryMatches
-from ..obj.player import PlayerSummaries
+from ..obj.player import Players
 from ..obj.hero import Heroes
 from ..obj.item import Items
 
@@ -20,16 +15,16 @@ def parse_result(result):
         return HistoryMatches(**result)
 
     if 'leagues' in result:
-        return LeagueListing(**result)
+        return LiveLeagueListing(**result)
 
     if 'games' in result:
-        return LiveLeagueGames(**result)
+        return LiveGames(**result)
 
     if 'teams' in result:
         return Teams(**result)
 
     if 'players' in result:
-        return PlayerSummaries(**result)
+        return Players(**result)
 
     if 'heroes' in result:
         return Heroes(**result)
