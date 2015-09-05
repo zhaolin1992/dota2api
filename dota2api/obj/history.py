@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from hero import Hero
-from basics import lobby_name
+from .hero import Hero
+from .basics import lobby_name
 
 
 class HistoryMatches(object):

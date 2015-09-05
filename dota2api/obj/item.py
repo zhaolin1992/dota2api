@@ -25,7 +25,7 @@ def load_item(index, **kwargs):
 
 class Items(list):
     def __init__(self, **kwargs):
-        map(self.append, [Item(item_kwargs['id']) for item_kwargs in kwargs['items']])
+        list(map(self.append, [Item(item_kwargs['id']) for item_kwargs in kwargs['items']]))
 
 
 class Item(object):

@@ -3,7 +3,7 @@
 
 class PlayerSummaries(list):
     def __init__(self, **kwargs):
-        map(self.append, [PlayerSummary(**summary_kwargs) for summary_kwargs in kwargs['players']])
+        list(map(self.append, [PlayerSummary(**summary_kwargs) for summary_kwargs in kwargs['players']]))
 
 
 class PlayerSummary(object):

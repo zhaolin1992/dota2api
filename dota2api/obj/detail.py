@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
-from basics import BasePlayer, cluster_name, lobby_name, game_mode_name, ability_name
-from item import load_item
+from .basics import BasePlayer, cluster_name, lobby_name, game_mode_name, ability_name
+from .item import load_item
 from ..src.utils import load_json_file
 
 

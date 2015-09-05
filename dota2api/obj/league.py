@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from basics import BasePlayer
-from hero import Hero
+from .basics import BasePlayer
+from .hero import Hero
 
 
 class LiveLeagueGamePlayer(BasePlayer):
@@ -20,7 +20,7 @@ class LiveLeagueGamePlayer(BasePlayer):
 
 class LeagueListing(list):
     def __init__(self, **kwargs):
-        map(self.append, [League(**league_kwargs) for league_kwargs in kwargs['leagues']])
+        list(map(self.append, [League(**league_kwargs) for league_kwargs in kwargs['leagues']]))
 
 
 class League(object):
@@ -37,7 +37,7 @@ class League(object):
 
 class LiveLeagueGames(list):
     def __init__(self, **kwargs):
-        map(self.append, [LiveLeagueGame(**live_game_kwargs) for live_game_kwargs in kwargs['games']])
+        list(map(self.append, [LiveLeagueGame(**live_game_kwargs) for live_game_kwargs in kwargs['games']]))
 
 
 class LiveLeagueGame(object):
@@ -113,7 +113,7 @@ class LiveLeagueGameTeam(object):
 
 class Teams(list):
     def __init__(self, **kwargs):
-        map(self.append, [Team(**team_args) for team_args in kwargs['teams']])
+        list(map(self.append, [Team(**team_args) for team_args in kwargs['teams']]))
 
 
 class Team(object):

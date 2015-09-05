@@ -3,8 +3,8 @@
 """Response template, this is used so we can pass the response as an object"""
 
 import json
-import parse
-from exceptions import *
+from . import parse
+from .exceptions import *
 
 
 def build(req, url):

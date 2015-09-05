@@ -3,7 +3,7 @@
 """Parse some of the values from the API, all can be found in the ``response`` returned"""
 
 
-from exceptions import APIError
+from .exceptions import APIError
 from ..obj.detail import DetailMatch
 from ..obj.league import LeagueListing, LiveLeagueGames, TournamentPrizePool, Teams
 from ..obj.history import HistoryMatches

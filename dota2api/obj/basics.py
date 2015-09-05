@@ -3,8 +3,8 @@
 
 import json
 import logging
-from hero import Hero
-from item import load_item
+from .hero import Hero
+from .item import load_item
 from ..src.utils import load_json_file
 
 class BasePlayer(object):

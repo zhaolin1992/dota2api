@@ -23,7 +23,7 @@ def hero_map(hero_id):
 
 class Heroes(list):
     def __init__(self, **kwargs):
-        map(self.append, [Hero(hero_kwargs['id']) for hero_kwargs in kwargs['heroes']])
+        list(map(self.append, [Hero(hero_kwargs['id']) for hero_kwargs in kwargs['heroes']]))
 
 class Hero(object):
     def __init__(self, hero_id):

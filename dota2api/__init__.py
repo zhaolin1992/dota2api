@@ -8,11 +8,11 @@ __version__ = "2.0.0"
 __licence__ = "GPL"
 
 import requests
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os
 import json
 
-from src import urls, exceptions, response, parse, utils
+from .src import urls, exceptions, response, parse, utils
 
 
 class Initialise(object):
@@ -226,7 +226,7 @@ class Initialise(object):
             kwargs['language'] = self.language
         if 'format' not in kwargs:
             kwargs['format'] = self.__format
-        api_query = urllib.urlencode(kwargs)
+        api_query = urllib.parse.urlencode(kwargs)
 
         return "{0}{1}?{2}".format(urls.BASE_URL,
                                    api_call,
