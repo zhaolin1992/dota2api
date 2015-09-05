@@ -11,6 +11,7 @@ from ..obj.player import PlayerSummaries
 from ..obj.hero import Heroes
 from ..obj.item import Items
 
+
 def parse_result(result):
     if 'match_id' in result and 'radiant_win' in result:
         return DetailMatch(**result)

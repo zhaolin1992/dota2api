@@ -8,7 +8,7 @@ __version__ = "2.0.0"
 __licence__ = "GPL"
 
 import requests
-import urllib.request, urllib.parse, urllib.error
+import urllib
 import os
 import json
 
@@ -71,8 +71,10 @@ class Initialise(object):
         """
         if 'account_id' not in kwargs:
             kwargs['account_id'] = account_id
+
         url = self.__build_url(urls.GET_MATCH_HISTORY, **kwargs)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -88,8 +90,10 @@ class Initialise(object):
         """
         if 'start_at_match_seq_num' not in kwargs:
             kwargs['start_at_match_seq_num'] = start_at_match_seq_num
+
         url = self.__build_url(urls.GET_MATCH_HISTORY_BY_SEQ_NUM, **kwargs)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -103,8 +107,10 @@ class Initialise(object):
         """
         if 'match_id' not in kwargs:
             kwargs['match_id'] = match_id
+
         url = self.__build_url(urls.GET_MATCH_DETAILS, **kwargs)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -117,6 +123,7 @@ class Initialise(object):
         """
         url = self.__build_url(urls.GET_LEAGUE_LISTING)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -129,6 +136,7 @@ class Initialise(object):
         """
         url = self.__build_url(urls.GET_LIVE_LEAGUE_GAMES)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -143,8 +151,10 @@ class Initialise(object):
         """
         if 'start_at_team_id' not in kwargs:
             kwargs['start_at_team_id'] = start_at_team_id
+
         url = self.__build_url(urls.GET_TEAM_INFO_BY_TEAM_ID, **kwargs)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -163,6 +173,7 @@ class Initialise(object):
 
         url = self.__build_url(urls.GET_PLAYER_SUMMARIES, **kwargs)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -175,6 +186,7 @@ class Initialise(object):
         """
         url = self.__build_url(urls.GET_HEROES)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -187,6 +199,7 @@ class Initialise(object):
         """
         url = self.__build_url(urls.GET_GAME_ITEMS)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -200,8 +213,10 @@ class Initialise(object):
         """
         if 'leagueid' not in kwargs:
             kwargs['leagueid'] = leagueid
+
         url = self.__build_url(urls.GET_TOURNAMENT_PRIZE_POOL, **kwargs)
         req = self.executor(url)
+
         if self.logger:
             self.logger.info('URL: {0}'.format(url))
         if not self.__check_http_err(req.status_code):
@@ -222,11 +237,14 @@ class Initialise(object):
     def __build_url(self, api_call, **kwargs):
         """Builds the api query"""
         kwargs['key'] = self.api_key
+
         if 'language' not in kwargs:
             kwargs['language'] = self.language
+
         if 'format' not in kwargs:
             kwargs['format'] = self.__format
-        api_query = urllib.parse.urlencode(kwargs)
+
+        api_query = urllib.urlencode(kwargs)
 
         return "{0}{1}?{2}".format(urls.BASE_URL,
                                    api_call,
@@ -244,15 +262,19 @@ class Initialise(object):
 
 def convert_to_64_bit(number):
     min64b = 76561197960265728
+
     if number < min64b:
         return number + min64b
+
     return number
 
 
 def _setup_logger():
-    import logging
-    logger = logging.getLogger('dota2api')
-    logger.basicConfig(level=logging.NOTSET)
+    import logging as log
+
+    logger = log.getLogger('dota2api')
+    logger.basicConfig(level=log.NOTSET)
+
     return logger
 
 
