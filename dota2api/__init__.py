@@ -4,5 +4,5 @@
 
 __author__ = "Joshua Duffy, Evaldo Bratti"
 __date__ = "29/10/2014"
-__version__ = "1.2.7"
+__version__ = "2.0.0"
 __licence__ = "GPL"
