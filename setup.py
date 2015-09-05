@@ -1,33 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
+import re
+import sys
 
-"""Setup script"""
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
-from setuptools import setup
-import dota2api
+if sys.argv[-1] == 'publish':
+    os.system('python setup.py sdist upload')
+    sys.exit()
 
 setup(
     name="dota2api",
-    version=dota2api.__version__,
-    author=dota2api.__author__,
+    version="2.0.0",
+    author="Joshua Duffy, Evaldo Bratti",
     author_email="mail@joshuaduffy.org",
     url="https://github.com/joshuaduffy/dota2api",
-    description=dota2api.__doc__,
-    license=dota2api.__licence__,
+    description="Dota 2 API wrapper and parser",
+    license="GPL",
     keywords="dota2 dota api dota2api parser",
-    packages=['dota2api', 'dota2api.src', 'dota2api.ref'],
+    packages=['dota2api', 'dota2api.src', 'dota2api.ref', 'dota2api.obj'],
     package_data={'dota2api.ref': ['abilities.json',
                                    'heroes.json',
                                    'items.json',
                                    'lobbies.json',
                                    'modes.json',
                                    'regions.json']},
-    install_requires=['requests>=2.2.1'],
+    install_requires=['requests'],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
+        "Natural Language :: English",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "License :: OSI Approved :: GNU General Public License (GPL)",
-        "Programming Language :: Python"
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
     ]
 )
