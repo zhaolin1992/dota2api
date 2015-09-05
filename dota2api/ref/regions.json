@@ -1,11 +1,19 @@
 {
     "regions": [
         {
+            "id" : 0,
+            "name" : "Unknow"
+        },
+        {
             "id" : 111,
             "name" : "US West"
         },
         {
             "id" : 112,
+            "name" : "US West"
+        },
+        {
+            "id" : 113,
             "name" : "US West"
         },
         {
