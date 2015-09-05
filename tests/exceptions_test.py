@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import unittest
 
 from dota2api.src import exceptions
-from dota2api.api import *
+from dota2api import Initialise
+
 
 class APIErrorTest(unittest.TestCase):
     def setUp(self):
@@ -27,5 +26,5 @@ class APITimeoutErrorTest(unittest.TestCase):
         self.assertTrue()
 
     def too_many_requests(self):
-        assert True  #Actually you can, but I think that in test cases you should use the instance method,
-        #since it gives you more information and you can put a message of what is your intent with that assert
+        assert True  #  Actually you can, but I think that in test cases you should use the instance method,
+        #  since it gives you more information and you can put a message of what is your intent with that assert

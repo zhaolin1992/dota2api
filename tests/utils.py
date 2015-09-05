@@ -1,5 +1,7 @@
 import os
 import json
+
+
 DEFAULT_MATCHES_SIZE = 100
 LANGUAGE_PAR = 'language=en_us'
 STEAM_ID_PAR = 'key=' + os.environ.get('D2_API_KEY')
@@ -65,7 +67,6 @@ class RequestMock(object):
 
     def configure_get_team_info_by_team_id(self):
         self._load_json_file("get_team_info_by_team_id_result.json")
-
 
     def configure_get_player_summaries(self):
         self._load_json_file("get_player_summaries_result.json")

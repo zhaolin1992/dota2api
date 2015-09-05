@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import unittest
-from dota2api.api import *
+from dota2api import Initialise
 from dota2api.src.exceptions import *
 from utils import *
 from dota2api.src.urls import *
@@ -14,8 +12,6 @@ class APITest(unittest.TestCase):
     def test_no_environment_variable_set_test(self):
         api = Initialise("SOME KEY")
         self.assertEqual(api.api_key, "SOME KEY")
-
-
 
     def test_json_loads_test(self):
             # Test json function loads json

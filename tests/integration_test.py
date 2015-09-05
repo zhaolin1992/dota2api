@@ -1,5 +1,5 @@
 from unittest import TestCase
-from dota2api.api import *
+from dota2api import *
 import utils
 from dota2api.src.urls import *
 from dota2api.src.exceptions import *
@@ -204,8 +204,9 @@ class APITest(TestCase):
         self.assertEqual(history[0].league_id, 1212)
         self.assertEqual(history[0].name, 'Dota 2 Just For Fun')
         self.assertEqual(history[0].tournament_url, 'https://binarybeast.com/xDOTA21404228/')
-        self.assertEqual(history[0].description,
-                         '64 of the best Brazilian amateur teams compete to become the winner of the first Dota 2 Just For Fun tournament. ')
+        self.assertEqual(history[0].description, "64 of the best Brazilian amateur teams compete to become" +
+                                                 " the winner of the first Dota 2 Just For Fun tournament. ")
+
         self.assertEqual(history[0].itemdef, 10541)
 
     def test_get_live_league_games(self):
@@ -317,6 +318,7 @@ class APITest(TestCase):
         self.assertEqual(history[0].admin_account_id, 45983302)
 
     def test_get_player_summaries(self):
+        steam_cdn = 'https://steamcdn-a.akamaihd.net/steamcommunity/public/'
         matcher = utils.UrlMatcher(BASE_URL + GET_PLAYER_SUMMARIES,
                                    utils.LANGUAGE_PAR,
                                    'steamids=%5B76561198049003839%5D',
@@ -341,11 +343,11 @@ class APITest(TestCase):
         self.assertEqual(history[0].last_logoff, 1429074263)
         self.assertEqual(history[0].profile_url, 'http://steamcommunity.com/profiles/76561198049003839/')
         self.assertEqual(history[0].url_avatar,
-                         'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/28/28d9341fc54980fb28946201944ddab438a27a59.jpg')
+                         steam_cdn + 'images/avatars/28/28d9341fc54980fb28946201944ddab438a27a59.jpg')
         self.assertEqual(history[0].url_avatar_medium,
-                         'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/28/28d9341fc54980fb28946201944ddab438a27a59_medium.jpg')
+                         steam_cdn + 'images/avatars/28/28d9341fc54980fb28946201944ddab438a27a59_medium.jpg')
         self.assertEqual(history[0].url_avatar_full,
-                         'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/28/28d9341fc54980fb28946201944ddab438a27a59_full.jpg')
+                         steam_cdn + 'images/avatars/28/28d9341fc54980fb28946201944ddab438a27a59_full.jpg')
         self.assertEqual(history[0].persona_state, 0)
         self.assertEqual(history[0].primary_clan_id, '103582791432815637')
         self.assertEqual(history[0].time_created, 1316303056)
