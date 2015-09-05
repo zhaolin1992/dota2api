@@ -247,7 +247,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'dota2api', u'dota2api Documentation',
-   u'Joshua Duffy', 'dota2api', 'One line description of project.',
+   u'Joshua Duffy', 'dota2api', 'Dota 2 API wrapper and parser.',
    'Miscellaneous'),
 ]
 

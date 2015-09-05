@@ -13,6 +13,13 @@ API
    :members:
 
 
+****************
+Response Objects
+****************
+
+.. automodule:: dota2api.obj
+   :members:
+
 ******
 Parser
 ******
