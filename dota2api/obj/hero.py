@@ -1,43 +1,8 @@
 import json
 
 from ..src import urls
+from .item import load_item
 from ..src.utils import load_json_file
-
-
-with open(load_json_file("abilities.json")) as abilities_json:
-    abilities = json.load(abilities_json)
-
-with open(load_json_file("regions.json")) as regions_json:
-    regions = json.load(regions_json)
-
-with open(load_json_file("lobbies.json")) as lobbies_json:
-    lobbies = json.load(lobbies_json)
-
-with open(load_json_file("modes.json")) as modes_json:
-    modes = json.load(modes_json)
-
-with open(load_json_file("heroes.json")) as heroes_json:
-    heroes = json.load(heroes_json)
-
-
-def hero_map(hero_id):
-    """
-    Parse the lobby, will be available as ``hero_name``
-    """
-
-    hero_maps = [hero for hero in heroes['heroes'] if hero['id'] == hero_id]
-    if hero_maps:
-        return hero_maps[0]
-    else:
-        return None
-
-
-def ability_name(ability_id):
-    ability = [ability['name'] for ability in abilities['abilities'] if ability['id'] == str(ability_id)]
-    if ability:
-        return ability[0]
-    else:
-        return "UNKNOWN"
 
 
 class Heroes(list):
@@ -70,3 +35,56 @@ class Hero(object):
 
     def __repr__(self):
         return 'Item id: {} name: {}'.format(self.id, self.localized_name)
+
+
+class AdditionalUnit(object):
+    def __init__(self, **kwargs):
+        self.unit_name = kwargs['unitname']
+        self.items = []
+        self.items.append(load_item(0, **kwargs))
+        self.items.append(load_item(1, **kwargs))
+        self.items.append(load_item(2, **kwargs))
+        self.items.append(load_item(3, **kwargs))
+        self.items.append(load_item(4, **kwargs))
+        self.items.append(load_item(5, **kwargs))
+
+
+class AbilityUpgrade(object):
+    def __init__(self, **kwargs):
+        self.ability = kwargs['ability']
+        self.ability_name = ability_name(self.ability)
+        self.time = kwargs['time']
+        self.level = kwargs['level']
+
+    def __repr__(self):
+        return 'AbilityUpgrade ability: {} name: {} level: {}'.format(self.ability, self.ability_name, self.level)
+
+
+def ability_name(ability_id):
+    ability = [ability['name'] for ability in abilities['abilities'] if ability['id'] == str(ability_id)]
+    if ability:
+        return ability[0]
+    else:
+        return "UNKNOWN"
+
+
+def hero_map(hero_id):
+    """
+    Parse the the hero name, will be available as ``hero_name``
+    """
+
+    hero_maps = [hero for hero in heroes['heroes'] if hero['id'] == hero_id]
+    if hero_maps:
+        return hero_maps[0]
+    else:
+        return None
+
+
+with open(load_json_file("leaver.json")) as items_json:
+    items = json.load(items_json)
+
+with open(load_json_file("abilities.json")) as abilities_json:
+    abilities = json.load(abilities_json)
+
+with open(load_json_file("heroes.json")) as heroes_json:
+    heroes = json.load(heroes_json)

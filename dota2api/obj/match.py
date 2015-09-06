@@ -4,40 +4,6 @@ from .player import DetailedPlayer
 from ..src.utils import load_json_file
 
 
-with open(load_json_file("abilities.json")) as abilities_json:
-    abilities = json.load(abilities_json)
-
-with open(load_json_file("regions.json")) as regions_json:
-    regions = json.load(regions_json)
-
-with open(load_json_file("lobbies.json")) as lobbies_json:
-    lobbies = json.load(lobbies_json)
-
-with open(load_json_file("modes.json")) as modes_json:
-    modes = json.load(modes_json)
-
-
-def game_mode_name(mode_id):
-    """
-    Parse the lobby, will be available as ``game_mode_name``
-    """
-    return [mode['name'] for mode in modes['modes'] if mode['id'] == mode_id][0]
-
-
-def lobby_name(lobby_id):
-    """
-    Parse the lobby, will be available as ``lobby_type``
-    """
-    return [lobby['name'] for lobby in lobbies['lobbies'] if lobby['id'] == lobby_id][0]
-
-
-def cluster_name(region_id):
-    """
-    Parse the lobby, will be available as ``cluster_name``
-    """
-    return [region['name'] for region in regions['regions'] if region['id'] == region_id][0]
-
-
 class DetailedMatch(object):
     def __init__(self, **kwargs):
         self.is_radiant_win = bool(kwargs["radiant_win"])
@@ -65,3 +31,34 @@ class DetailedMatch(object):
 
     def __repr__(self):
         return 'Match match_id: {}'.format(self.match_id)
+
+
+def game_mode_name(mode_id):
+    """
+    Parse the lobby, will be available as ``game_mode_name``
+    """
+    return [mode['name'] for mode in modes['modes'] if mode['id'] == mode_id][0]
+
+
+def lobby_name(lobby_id):
+    """
+    Parse the lobby, will be available as ``lobby_type``
+    """
+    return [lobby['name'] for lobby in lobbies['lobbies'] if lobby['id'] == lobby_id][0]
+
+
+def cluster_name(region_id):
+    """
+    Parse the lobby, will be available as ``cluster_name``
+    """
+    return [region['name'] for region in regions['regions'] if region['id'] == region_id][0]
+
+
+with open(load_json_file("regions.json")) as regions_json:
+    regions = json.load(regions_json)
+
+with open(load_json_file("lobbies.json")) as lobbies_json:
+    lobbies = json.load(lobbies_json)
+
+with open(load_json_file("modes.json")) as modes_json:
+    modes = json.load(modes_json)

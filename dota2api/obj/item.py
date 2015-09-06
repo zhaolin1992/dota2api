@@ -4,39 +4,6 @@ from ..src.utils import load_json_file
 from ..src.urls import BASE_ITEMS_IMAGES_URL
 
 
-with open(load_json_file("abilities.json")) as abilities_json:
-    abilities = json.load(abilities_json)
-
-with open(load_json_file("regions.json")) as regions_json:
-    regions = json.load(regions_json)
-
-with open(load_json_file("lobbies.json")) as lobbies_json:
-    lobbies = json.load(lobbies_json)
-
-with open(load_json_file("modes.json")) as modes_json:
-    modes = json.load(modes_json)
-
-with open(load_json_file("items.json")) as items_json:
-    items = json.load(items_json)
-
-
-def item_map(item_id):
-    item_maps = [item for item in items['items'] if item['id'] == item_id]
-
-    if item_maps:
-        return item_maps[0]
-    else:
-        return ''
-
-
-def load_item(index, **kwargs):
-    live_game_item_index = "item" + str(index)
-    match_history_item_index = "item_" + str(index)
-
-    item_id = kwargs.get(match_history_item_index, kwargs.get(live_game_item_index))
-    return Item(item_id)
-
-
 class Items(list):
     def __init__(self, **kwargs):
         super(Items, self).__init__()
@@ -66,3 +33,24 @@ class Item(object):
 
     def __repr__(self):
         return 'Item id: {} name: {}'.format(self.id, self.localized_name)
+
+
+def item_map(item_id):
+    item_maps = [item for item in items['items'] if item['id'] == item_id]
+
+    if item_maps:
+        return item_maps[0]
+    else:
+        return ''
+
+
+def load_item(index, **kwargs):
+    live_game_item_index = "item{0}".format(str(index))
+    match_history_item_index = "item_{0}".format(str(index))
+
+    item_id = kwargs.get(match_history_item_index, kwargs.get(live_game_item_index))
+    return Item(item_id)
+
+
+with open(load_json_file("items.json")) as items_json:
+    items = json.load(items_json)

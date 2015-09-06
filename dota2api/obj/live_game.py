@@ -1,21 +1,5 @@
-import json
-
 from .hero import Hero
 from .player import BasePlayer
-from ..src.utils import load_json_file
-
-
-with open(load_json_file("abilities.json")) as abilities_json:
-    abilities = json.load(abilities_json)
-
-with open(load_json_file("regions.json")) as regions_json:
-    regions = json.load(regions_json)
-
-with open(load_json_file("lobbies.json")) as lobbies_json:
-    lobbies = json.load(lobbies_json)
-
-with open(load_json_file("modes.json")) as modes_json:
-    modes = json.load(modes_json)
 
 
 class LiveGamePlayer(BasePlayer):
