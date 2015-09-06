@@ -156,4 +156,3 @@ class AbilityLevel(object):
         self.ability_level = kwargs.get('ability_level')
         self.ability_name = ability_name(self.ability_id)
 """
-

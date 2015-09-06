@@ -37,37 +37,6 @@ class Hero(object):
         return 'Item id: {} name: {}'.format(self.id, self.localized_name)
 
 
-class AdditionalUnit(object):
-    def __init__(self, **kwargs):
-        self.unit_name = kwargs['unitname']
-        self.items = []
-        self.items.append(load_item(0, **kwargs))
-        self.items.append(load_item(1, **kwargs))
-        self.items.append(load_item(2, **kwargs))
-        self.items.append(load_item(3, **kwargs))
-        self.items.append(load_item(4, **kwargs))
-        self.items.append(load_item(5, **kwargs))
-
-
-class AbilityUpgrade(object):
-    def __init__(self, **kwargs):
-        self.ability = kwargs['ability']
-        self.ability_name = ability_name(self.ability)
-        self.time = kwargs['time']
-        self.level = kwargs['level']
-
-    def __repr__(self):
-        return 'AbilityUpgrade ability: {} name: {} level: {}'.format(self.ability, self.ability_name, self.level)
-
-
-def ability_name(ability_id):
-    ability = [ability['name'] for ability in abilities['abilities'] if ability['id'] == str(ability_id)]
-    if ability:
-        return ability[0]
-    else:
-        return "UNKNOWN"
-
-
 def hero_map(hero_id):
     """
     Parse the the hero name, will be available as ``hero_name``
@@ -79,12 +48,6 @@ def hero_map(hero_id):
     else:
         return None
 
-
-with open(load_json_file("leaver.json")) as items_json:
-    items = json.load(items_json)
-
-with open(load_json_file("abilities.json")) as abilities_json:
-    abilities = json.load(abilities_json)
 
 with open(load_json_file("heroes.json")) as heroes_json:
     heroes = json.load(heroes_json)
