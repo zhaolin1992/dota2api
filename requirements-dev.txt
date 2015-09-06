@@ -2,3 +2,4 @@ requests
 nose
 nose-cov
 sphinx
+pylint
