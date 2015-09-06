@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
 import re
 import sys
+
+from codecs import open
 
 try:
     from setuptools import setup
@@ -13,16 +13,41 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
+packages = [
+    'dota2api',
+    'dota2api.src',
+    'dota2api.ref',
+    'dota2api.obj',
+]
+
+author = ''
+with open('dota2api/__init__.py', 'r') as fd:
+    author = re.search(r'^__author__\s*=\s*[\'"]([^\'"]*)[\'"]',
+                        fd.read(), re.MULTILINE).group(1)
+
+
+version = ''
+with open('dota2api/__init__.py', 'r') as fd:
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
+                        fd.read(), re.MULTILINE).group(1)
+
+if not version:
+    raise RuntimeError('Cannot find version information')
+
+with open('README.rst', 'r', 'utf-8') as f:
+    readme = f.read()
+
 setup(
     name="dota2api",
-    version="2.0.0",
-    author="Joshua Duffy, Evaldo Bratti",
+    version=version,
+    author=author,
     author_email="mail@joshuaduffy.org",
     url="https://github.com/joshuaduffy/dota2api",
     description="Dota 2 API wrapper and parser",
+    long_description=readme,
     license="GPL",
     keywords="dota2 dota api dota2api parser",
-    packages=['dota2api', 'dota2api.src', 'dota2api.ref', 'dota2api.obj'],
+    packages=packages,
     package_data={'dota2api.ref': ['abilities.json',
                                    'heroes.json',
                                    'items.json',
