@@ -149,6 +149,16 @@ class TournamentPrizePool(object):
     def __repr__(self):
         return 'TournamentPrize league_id: {} prize: {}'.format(self.league_id, self.prize_pool)
 
+
+class UGCFile(object):
+    def __init__(self, **kwargs):
+        self.filename = kwargs.get('filename')
+        self.fileurl = kwargs.get('url')
+        self.size = kwargs.get('size')
+
+    def __repr__(self):
+        return 'UGCFile'
+
 """
 class AbilityLevel(object):
     def __init__(self, **kwargs):

@@ -1,6 +1,6 @@
 from .exceptions import APIError
 from ..obj.match import DetailedMatch
-from ..obj.live_game import LiveLeagueListing, LiveGames, TournamentPrizePool, Teams
+from ..obj.live_game import LiveLeagueListing, LiveGames, TournamentPrizePool, Teams, UGCFile
 from ..obj.history import HistoryMatches
 from ..obj.player import Players
 from ..obj.hero import Heroes
@@ -34,5 +34,8 @@ def parse_result(result):
 
     if 'prize_pool' in result:
         return TournamentPrizePool(**result)
+
+    if 'filename' in result:
+        return UGCFile(**result)
 
     raise APIError("There are no parser available for the result")

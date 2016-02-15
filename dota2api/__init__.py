@@ -201,6 +201,17 @@ class Initialise(object):
         """
         _save_dict_to_file(self.get_heroes().resp, "heroes.json")
 
+    def get_ugc_file_details(self, ugcid=None, **kwargs):
+        if 'ugcid' not in kwargs:
+            kwargs['ugcid'] = ugcid
+        if 'appid' not in kwargs:
+            kwargs['appid'] = 570
+        url = self.__build_url(urls.GET_UGC_FILE_DETAILS, **kwargs)
+        req = self.executor(url)
+
+        if not self.__check_http_err(req.status_code):
+            return self.parser(req, url)
+
     def __build_url(self, api_call, **kwargs):
         """Builds the api query"""
         kwargs['key'] = self.api_key
@@ -211,7 +222,7 @@ class Initialise(object):
         if 'format' not in kwargs:
             kwargs['format'] = self.__format
 
-        api_query = urllib.urlencode(kwargs)
+        api_query = urllib.parse.urlencode(kwargs)
 
         return "{0}{1}?{2}".format(urls.BASE_URL,
                                    api_call,

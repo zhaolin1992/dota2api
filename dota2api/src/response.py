@@ -21,6 +21,8 @@ def build(req, url):
 
     elif 'response' in req_resp:
         resp = req_resp['response']
+    elif 'data' in req_resp:
+        resp = req_resp['data']
     else:
         resp = req_resp
 
