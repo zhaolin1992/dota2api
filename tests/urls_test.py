@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 import unittest
 
+from dota2api.src.urls import *
 from dota2api import Initialise
 from dota2api.src import exceptions
-from dota2api.src.urls import *
 from tests.utils import *
 
 
@@ -102,7 +103,7 @@ class UrlsMatchTests(unittest.TestCase):
 
     def test_get_player_summaries(self):
         matcher = UrlMatcher(BASE_URL + GET_PLAYER_SUMMARIES, LANGUAGE_PAR, STEAM_ID_PAR,
-                             'steamids=%5B76561198049003839%5D', 'format=json')
+                             'steamids=76561198049003839', 'format=json')
 
         self.api.executor = RequestMock(matcher).configure_success()
         account_id = 88738111
@@ -131,12 +132,11 @@ class UrlsMatchTests(unittest.TestCase):
         self.api.get_tournament_prize_pool(1)
         self.api.executor.assert_called()
 
-    def test_player_summaries_converts_steam_ids_32b_automatically(self):
-        matcher = UrlMatcher(BASE_URL + GET_PLAYER_SUMMARIES, STEAM_ID_PAR, LANGUAGE_PAR,
-                             'steamids=%5B76561197960266049%5D', 'format=json')
+    def get_top_live_games(self):
+        matcher = UrlMatcher(BASE_URL + GET_TOP_LIVE_GAME, STEAM_ID_PAR, LANGUAGE_PAR, 'format=json')
 
         self.api.executor = RequestMock(matcher).configure_success()
-        self.api.get_player_summaries(321)
+        self.api.get_tournament_prize_pool(1)
         self.api.executor.assert_called()
 
 

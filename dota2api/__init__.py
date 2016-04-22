@@ -4,21 +4,15 @@
 
 __author__ = "Joshua Duffy, Evaldo Bratti"
 __date__ = "29/10/2014"
-__version__ = "1.3.1"
+__version__ = "1.2.9"
 __licence__ = "GPL"
 
-import json
-import collections
-
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
-
-import os
 import requests
+import urllib
+import os
+import json
 
-from .src import urls, exceptions, response, parse
+from src import urls, exceptions, response, parse
 
 
 class Initialise(object):
@@ -28,7 +22,6 @@ class Initialise(object):
     :param api_key: (str) string with the ``api key``
     :param logging: (bool, optional) set this to True for logging output
     """
-
     def __init__(self, api_key=None, executor=None, language=None, logging=None):
         if api_key:
             self.api_key = api_key
@@ -159,17 +152,11 @@ class Initialise(object):
     def get_player_summaries(self, steamids=None, **kwargs):
         """Returns a dictionary containing a player summaries
 
-        :param steamids: (list) list of ``32-bit`` or ``64-bit`` steam ids, notice
-                                that api will convert if ``32-bit`` are given
+        :param steamids: (list) list of ``64-bit`` steam ids
         :return: dictionary of player summaries, see :doc:`responses </responses>`
         """
-        if not isinstance(steamids, collections.Iterable):
-            steamids = [steamids]
-
-        base64_ids = list(map(convert_to_64_bit, filter(lambda x: x is not None, steamids)))
-
         if 'steamids' not in kwargs:
-            kwargs['steamids'] = base64_ids
+            kwargs['steamids'] = steamids
         url = self.__build_url(urls.GET_PLAYER_SUMMARIES, **kwargs)
         req = self.executor(url)
         if self.logger:
@@ -216,6 +203,21 @@ class Initialise(object):
         if not self.__check_http_err(req.status_code):
             return response.build(req, url)
 
+    def get_top_live_games(self, partner=None, **kwargs):
+        """Returns a dictionary that includes community funded tournament prize pools
+
+        :param partner: (int, optional)
+        :return: dictionary of prize pools, see :doc:`responses </responses>`
+        """
+        if 'partner' not in kwargs:
+            kwargs['partner'] = partner
+        url = self.__build_url(urls.GET_TOP_LIVE_GAME, **kwargs)
+        req = self.executor(url)
+        if self.logger:
+            self.logger.info('URL: {0}'.format(url))
+        if not self.__check_http_err(req.status_code):
+            return response.build(req, url)
+
     def update_game_items(self):
         """
         Update the item reference data via the API
@@ -235,7 +237,7 @@ class Initialise(object):
             kwargs['language'] = self.language
         if 'format' not in kwargs:
             kwargs['format'] = self.__format
-        api_query = urlencode(kwargs)
+        api_query = urllib.urlencode(kwargs)
 
         return "{0}{1}?{2}".format(urls.BASE_URL,
                                    api_call,
@@ -252,10 +254,7 @@ class Initialise(object):
 
 
 def convert_to_64_bit(number):
-    min64b = 76561197960265728
-    if number < min64b:
-        return number + min64b
-    return number
+    return number + 76561197960265728
 
 
 def _setup_logger():
