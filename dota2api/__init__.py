@@ -177,7 +177,7 @@ class Initialise(object):
         if not self.__check_http_err(req.status_code):
             return response.build(req, url)
 
-    def get_heroes(self, language=None, **kwargs):
+    def get_heroes(self, **kwargs):
         """Returns a dictionary of in-game heroes, used to parse ids into localised names
 
         :return: dictionary of heroes, see :doc:`responses </responses>`
@@ -189,7 +189,7 @@ class Initialise(object):
         if not self.__check_http_err(req.status_code):
             return response.build(req, url)
 
-    def get_game_items(self, language=None, **kwargs):
+    def get_game_items(self, **kwargs):
         """Returns a dictionary of in-game items, used to parse ids into localised names
 
         :return: dictionary of items, see :doc:`responses </responses>`
